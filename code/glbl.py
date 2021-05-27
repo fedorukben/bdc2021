@@ -1,4 +1,5 @@
 d = {
     'misinfo-type': None,
-    'social-algos': None,
+    'reddit-prog': None,
+    'reddit-covid': None,
 }

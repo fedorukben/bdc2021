@@ -1,9 +1,10 @@
 import pandas as pd
 import seaborn as sb
 from matplotlib import pyplot as plt
+from sklearn.decomposition import PCA
 import glbl as g
 
-def clean():
+def clean_months():
     months = []
     for dt in g.d['status_created_at']:
         if 'Jan' in dt:
@@ -23,3 +24,10 @@ def clean():
         else:
             print("Whoops!")
     g.d['month'] = months
+
+def remove_zero_compound(key):
+    g.d[key] = g.d[key][g.d[key]['compound'] != 0]
+
+def pca(key):
+    pca = PCA(2)
+    g.d[key] = pca.fit_transform(g.d[key])
