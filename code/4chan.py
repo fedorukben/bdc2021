@@ -53,4 +53,4 @@ tuples = list(zip(titles, comments, datetimes, names, ids, is_ops))
 
 df = pd.DataFrame(tuples, columns=['title', 'comment', 'datetime', 
                                    'name', 'id', 'is_op'])
-df.to_pickle('4chan-b.pkl')
+df.to_pickle('../data/pickle/4chan-b.pkl')
