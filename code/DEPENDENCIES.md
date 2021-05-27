@@ -12,3 +12,18 @@ numpy ver. 1.20.2
 (installed using `pip install numpy`)
 seaborn ver. 0.11.1
 (installed using `pip install seaborn`)
+basc\_py4chan ver. 0.6.5
+(installed using `pip install basc_py4chan`)
+beautifulsoup4 ver. 4.9.3
+(installed using `pip install beautifulsoup`)
+progressbar ver. 2.5
+(installed using `pip install progressbar`)
+sklearn ver. 0.0
+(installed using `pip install sklearn`)
+urllib3 ver. 1.26.2
+(installed using `pip install urllib`)
+nlkt ver. 3.5
+(installed using `pip install nlkt`)
+ipython ver. 7.23.1
+(installed using `pip install ipython`)
+

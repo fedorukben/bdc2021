@@ -1,5 +1,4 @@
 import pandas as pd
-import seaborn as sb
 from matplotlib import pyplot as plt
 from matplotlib import axes
 from sklearn.cluster import KMeans
