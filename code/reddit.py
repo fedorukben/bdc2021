@@ -72,8 +72,6 @@ for headline in df['headline']:
     word_count.append(len(headline.split()))
 df['words'] = word_count
 
-print(df.head(10))
-
-print(type(df))
-
 df.to_pickle("../data/pickle/reddit-askdon.pkl")
+
+print("Done!")

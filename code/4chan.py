@@ -5,19 +5,28 @@ import datetime
 import pandas as pd
 from bs4 import BeautifulSoup
 import re
+import os
 from progressbar import ProgressBar
 import warnings
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 def clean_comment(comment):
     c1 = re.sub('http://\S+|https://\S+', '', comment)
     c2 = BeautifulSoup(c1, 'lxml').text
-    return c2
+    if c2[:2] == ">>":
+        c3 = c2[11:]
+    else:
+        c3 = c2
+    c4 = re.sub('>', '', c3)
+    return c4
 
 warnings.filterwarnings('ignore')
 pbar = ProgressBar()
+nltk.download('vader_lexicon')
 
 # get the board we want
-board = basc_py4chan.Board('b')
+board = basc_py4chan.Board('r9k')
 
 # select the first thread on the board
 all_thread_ids = board.get_all_thread_ids()
@@ -49,8 +58,35 @@ for thread_id in pbar(all_thread_ids):
     except:
         continue
 
-tuples = list(zip(titles, comments, datetimes, names, ids, is_ops))
+# tuples = list(zip(titles, comments, datetimes, names, ids, is_ops))
 
-df = pd.DataFrame(tuples, columns=['title', 'comment', 'datetime', 
-                                   'name', 'id', 'is_op'])
-df.to_pickle('../data/pickle/4chan-b.pkl')
+# df = pd.DataFrame(tuples, columns=['title', 'comment', 'datetime', 
+#                                    'name', 'id', 'is_op'])
+
+sia = SentimentIntensityAnalyzer()
+results = []
+texts = set(comments).union(set(titles))
+
+print("Performing sentiment analysis...")
+for line in texts:
+  pol_score = sia.polarity_scores(line)
+  if pol_score['compound'] == 0.0:
+      continue
+  pol_score['text'] = line
+  results.append(pol_score)
+
+df = pd.DataFrame.from_records(results)
+df['label'] = 0
+df.loc[df['compound'] > 0.1, 'label'] = 1
+df.loc[df['compound'] < -0.1, 'label'] = -1
+
+if os.path.isfile(f'../data/pickle/4chan-{board.name}.pkl'):
+    last_df = pd.read_pickle(f'../data/pickle/4chan-{board.name}.pkl')
+    concat_df = pd.concat([df, last_df])
+    df_no_dupl = df.drop_duplicates()
+
+    df_no_dupl.to_pickle(f'../data/pickle/4chan-{board.name}.pkl')
+else:
+    df.to_pickle(f'../data/pickle/4chan-{board.name}.pkl')
+
+print("Done!")
