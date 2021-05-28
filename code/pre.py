@@ -26,6 +26,7 @@ fchan_boards = [
 
 # df = pd.io.stata.read_stata('file.dta')
 g.d['misinfo-type'] = pd.read_pickle("../data/pickle/misinfo-type.pkl")
+g.d['twitter'] = pd.read_pickle('../data/pickle/twitter.pkl')
 for sub in reddit_subs:
     g.d[f'reddit-{sub}'] = pd.read_pickle(f"../data/pickle/reddit-{sub}.pkl")
 for board in fchan_boards:
@@ -38,10 +39,10 @@ print("Data successfully cleaned.")
 
 #fig = sns.histplot(data=g.d['reddit-movies'], x='compound', bins=50, kde=True, hue='words', alpha=.7)
 #fig = sns.scatterplot(data=g.d['reddit-ask'], x='compound', y='words')
-fig = sns.histplot(data=g.d['4chan-pol'], x='compound', bins=50, kde=True)
+fig = sns.histplot(data=g.d['twitter'], x='compound', bins=50, kde=True)
 fig.set(xlabel='compounded positivity score on [-1, 1]', 
         ylabel='frequency', 
         #title='Reddit r/movies Positivity vs. No. of Words',)
-        title='4chan /pol/ Frequency of Positivity')
+        title='COVID-19-Related Tweets\' Frequency of Positivity')
 print("Plotting figure...")
 plt.show()
