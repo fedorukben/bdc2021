@@ -19,7 +19,7 @@ def clean_comment(comment):
     else:
         c3 = c2
     c4 = re.sub('>', '', c3)
-    return c4
+    return c4.lower()
 
 warnings.filterwarnings('ignore')
 pbar = ProgressBar()
@@ -63,30 +63,47 @@ for thread_id in pbar(all_thread_ids):
 # df = pd.DataFrame(tuples, columns=['title', 'comment', 'datetime', 
 #                                    'name', 'id', 'is_op'])
 
-sia = SentimentIntensityAnalyzer()
 results = []
 texts = set(comments).union(set(titles))
 
-print("Performing sentiment analysis...")
-for line in texts:
-  pol_score = sia.polarity_scores(line)
-  if pol_score['compound'] == 0.0:
-      continue
-  pol_score['text'] = line
-  results.append(pol_score)
+keywords = ['wuhanvirus','chinavirus','chinese lab virus', 'wuflu', 'kung flu']
+clean_text1 = set()
 
-df = pd.DataFrame.from_records(results)
-df['label'] = 0
-df.loc[df['compound'] > 0.1, 'label'] = 1
-df.loc[df['compound'] < -0.1, 'label'] = -1
+for text in texts: 
+  for keyword in keywords:
+    if keyword in text: 
+      clean_text1.add(text)
+print(len(clean_text1))
 
-if os.path.isfile(f'../data/pickle/4chan-{board.name}.pkl'):
-    last_df = pd.read_pickle(f'../data/pickle/4chan-{board.name}.pkl')
-    concat_df = pd.concat([df, last_df])
-    df_no_dupl = df.drop_duplicates()
+good_keywords = ['covid-19','covid','sars-cov-2']
+clean_text2 = set() 
 
-    df_no_dupl.to_pickle(f'../data/pickle/4chan-{board.name}.pkl')
-else:
-    df.to_pickle(f'../data/pickle/4chan-{board.name}.pkl')
+for text in texts: 
+  for keyword in good_keywords:
+    if keyword in text:  
+      clean_text2.add(text)
+print(len(clean_text2))
 
-print("Done!")
+# print("Performing sentiment analysis...")
+# for line in texts:
+#   pol_score = sia.polarity_scores(line)
+#   if pol_score['compound'] == 0.0:
+#       continue
+#   pol_score['text'] = line
+#   results.append(pol_score)
+
+# df = pd.DataFrame.from_records(results)
+# df['label'] = 0
+# df.loc[df['compound'] > 0.1, 'label'] = 1
+# df.loc[df['compound'] < -0.1, 'label'] = -1
+
+# if os.path.isfile(f'../data/pickle/4chan-{board.name}.pkl'):
+#     last_df = pd.read_pickle(f'../data/pickle/4chan-{board.name}.pkl')
+#     concat_df = pd.concat([df, last_df])
+#     df_no_dupl = df.drop_duplicates()
+
+#     df_no_dupl.to_pickle(f'../data/pickle/4chan-{board.name}.pkl')
+# else:
+#     df.to_pickle(f'../data/pickle/4chan-{board.name}.pkl')
+
+# print("Done!")
