@@ -37,13 +37,13 @@ headlines = set()
 time_now = datetime.datetime.now()
 limit_delta = 365
 limit_lower_delta = 360
-subreddit = "politics"
+subreddit = "covid"
 result_size = 1000
 score_limit = ">1"
 
 print(f"Scraping data from r/{subreddit}...")
 
-for i in pbar(range(0, 200)):
+for i in pbar(range(0, 2000)):
   previous_timestamp = int((time_now - datetime.timedelta(days=limit_delta)).timestamp())
   current_timestamp = int((time_now - datetime.timedelta(days=limit_lower_delta)).timestamp())
   full_collection = load_results(previous_timestamp, current_timestamp, result_size, subreddit, score_limit)
