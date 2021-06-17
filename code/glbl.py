@@ -19,4 +19,13 @@ fchan_boards = [
     'b',
     'pol',
     'r9k',
+    'v',
+    'a',
 ]
+colors = {
+    'twitter': '#1da1f2',
+    'parler': '#be1e2d',
+    'reddit': '',
+    '4chan': '',
+    'facebook': '',
+}

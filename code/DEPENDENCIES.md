@@ -26,4 +26,9 @@ nlkt ver. 3.5
 (installed using `pip install nlkt`)
 ipython ver. 7.23.1
 (installed using `pip install ipython`)
-
+twark ver. 2.0.13
+(installed using `pip install twark`)
+pyenchant ver. 3.2.0
+(installed using `pip install pyenchant`)
+demoji ver. 0.4.0
+(installed using `pip install demoji`)

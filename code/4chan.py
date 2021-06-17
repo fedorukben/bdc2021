@@ -26,7 +26,7 @@ pbar = ProgressBar()
 nltk.download('vader_lexicon')
 
 # get the board we want
-board = basc_py4chan.Board('r9k')
+board = basc_py4chan.Board('a')
 
 # select the first thread on the board
 all_thread_ids = board.get_all_thread_ids()
