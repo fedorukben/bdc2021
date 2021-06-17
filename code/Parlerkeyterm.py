@@ -14,14 +14,14 @@ df = pd.read_pickle(r"C:\Users\Kai Fucile Ladouceur\.vscode\Code\bdc2021\data\pi
 # number_of_entries = df.shape[0] - 5 # subtracted 5 to deal with index errors
 key_terms = ["china flu","wuflu","china virus","wuhan virus", "kungflu","wuhan","lab leak"]
 
-df2 = pd.DataFrame()
-
 df["text"] = df['text'].str.lower()
+df.reset_index()
+
 for index, harrisonisthebest in df.iterrows():
   # if "variant" in harrisonisthebest['text'].lower():
   #   for keyterm in ["british", "indian","uk","brazil","britain","u.k.","india","south africa","brazilian","african"]:
   for keyterm in key_terms:
-    if keyterm in harrisonisthebest['text'].lower():
-      df2 = pd.concat([df2, harrisonisthebest.to_frame().T])
+    if keyterm not in harrisonisthebest["text"]: 
+      df.drop(index)
 
-df2.to_pickle("Parler-name-filter.pkl")
+df.to_pickle("Parler-name-filter.pkl")
