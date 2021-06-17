@@ -1,35 +1,25 @@
-df = pd.read_csv("/content/gdrive/My Drive/Coding/Colab Notebooks/twitter.csv")
-number_of_entries = df.shape[0] - 5 # subtracted 5 to deal with index errors
-tweets = []
-for i in range(207000):
-  random.seed()
-  rand_row = random.randint(0, number_of_entries)
-  tweet = str(df.at[rand_row,'text'])
-  tweets.append(tweet)
-tweets_set = set(tweets)
+import pandas as pd
+import re
+import os
+from progressbar import ProgressBar
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import random
+sia = SentimentIntensityAnalyzer()
 
-results = []
+pbar = ProgressBar()
 
-for tweet in tweets:
-  pol_score = sia.polarity_scores(tweet)
-  if pol_score['compound'] == 0.0:
-      continue
-  pol_score['text'] = tweet
-  results.append(pol_score)
+df = pd.read_pickle(r"C:\Users\Kai Fucile Ladouceur\.vscode\Code\bdc2021\data\pickle\twitter.pkl")
+# print(df['headline'][278].tolist()[-1])
+# number_of_entries = df.shape[0] - 5 # subtracted 5 to deal with index errors
+df2 = pd.DataFrame()
+key_terms = ["china flu","wuflu","china virus","wuhan virus", "kungflu","wuhan","lab leak"]
+for index, harrisonisthebest in df.iterrows():
+# if "variant" in harrisonisthebest['text'].lower():
+  #   for keyterm in ["british", "indian","uk","brazil","britain","u.k.","india","south africa","brazilian","african"]:
+  for keyterm in key_terms:
+    if keyterm in harrisonisthebest['text'].lower():
+      df2 = pd.concat([df2, harrisonisthebest.to_frame().T])
 
-df = pd.DataFrame.from_records(results)
-df['label'] = 0
-df.loc[df['compound'] > 0.1, 'label'] = 1
-df.loc[df['compound'] < -0.1, 'label'] = -1
 
-key_terms = ["bioweapon","antivax","china virus","wuhan virus", "microchip"]
-clean_tweets = set() 
-for tweet in tweets:  
-  for key_term in key_terms: 
-    if key_term in tweet: 
-      if tweet[0] == "@":  
-        tweet = ' '.join(tweet.split()[1:]) 
-      clean_tweets.add(tweet)
-# print(len(clean_tweets))
-df.to_pickle("twitter.pkl") # change
-
+print(df2)
