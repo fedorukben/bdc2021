@@ -1,15 +1,18 @@
-print("Please enter positive mu: ")
+print("Enter mu+: ", end='')
 mup = float(input())
-print("Please enter negative mu:")
+
+print("Enter mu-: ", end='')
 mun = float(input())
-print("Please enter f(positive mu):")
+
+print("Enter f(mu+): ", end='')
 fp = float(input())
-print("Please enter f(negative mu):")
+
+print("Enter f(mu-): ", end='')
 fn = float(input())
 
-top = (2 * fp) - (2 * fn)
-bot = (mup * fp) + (mup * fn) - (mun * fp) - (mun * fn)
+numer = (2 * fp) - (2 * fn)
+denom = (mup * fp) + (mup * fn) - (mun * fp) - (mun * fn)
 
-gamma = float(top) / bot
+gamma = float(numer) / denom
 
-print(f'Gamma = {gamma}')
+print(f'Gamma is: {gamma}')

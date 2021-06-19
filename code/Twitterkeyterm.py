@@ -1,35 +1,34 @@
-df = pd.read_csv("/content/gdrive/My Drive/Coding/Colab Notebooks/twitter.csv")
-number_of_entries = df.shape[0] - 5 # subtracted 5 to deal with index errors
-tweets = []
-for i in range(207000):
-  random.seed()
-  rand_row = random.randint(0, number_of_entries)
-  tweet = str(df.at[rand_row,'text'])
-  tweets.append(tweet)
-tweets_set = set(tweets)
+import pandas as pd
+import re
+import os
+from progressbar import ProgressBar
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import random
+sia = SentimentIntensityAnalyzer()
 
-results = []
+pbar = ProgressBar()
 
-for tweet in tweets:
-  pol_score = sia.polarity_scores(tweet)
-  if pol_score['compound'] == 0.0:
-      continue
-  pol_score['text'] = tweet
-  results.append(pol_score)
+df = pd.read_pickle(r"C:\Users\Kai Fucile Ladouceur\.vscode\Code\bdc2021\data\pickle\parley.pkl")
+# print(df['headline'][278].tolist()[-1])
+# number_of_entries = df.shape[0] - 5 # subtracted 5 to deal with index errors
+key_terms = ["sars-cov-2","severe acute respiratory syndrome coronavirus 2"]
 
-df = pd.DataFrame.from_records(results)
-df['label'] = 0
-df.loc[df['compound'] > 0.1, 'label'] = 1
-df.loc[df['compound'] < -0.1, 'label'] = -1
+df["headline"] = df['headline'].str.lower()
+df.reset_index()
+#test out seeing if using sars-cov-2 and scientific names have reduced negative sentiment when compared to just using covid or covid 19
 
-key_terms = ["bioweapon","antivax","china virus","wuhan virus", "microchip"]
-clean_tweets = set() 
-for tweet in tweets:  
-  for key_term in key_terms: 
-    if key_term in tweet: 
-      if tweet[0] == "@":  
-        tweet = ' '.join(tweet.split()[1:]) 
-      clean_tweets.add(tweet)
-# print(len(clean_tweets))
-df.to_pickle("twitter.pkl") # change
+df3 = pd.DataFrame()
+# print(df)
+for index, harrisonisthebest in df.iterrows():
+   for keyterm in key_terms:
+    if keyterm in harrisonisthebest['headline'].lower():
+      df3 = pd.concat([df3, harrisonisthebest.to_frame().T])
 
+print(df3)
+df3['compound'] = pd.to_numeric(df3['compound'])
+df3['pos'] = pd.to_numeric(df3['pos'])
+df3['neg'] = pd.to_numeric(df3['neg'])
+df3['neu'] = pd.to_numeric(df3['neu'])
+df3['label'] = pd.to_numeric(df3['label'])
+# df3.to_pickle(r"C:\Users\Kai Fucile Ladouceur\.vscode\Code\bdc2021\data\pickle\Parler-name-filter.pkl")
