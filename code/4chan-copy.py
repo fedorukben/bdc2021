@@ -12,13 +12,25 @@ pbar = ProgressBar()
 df = pd.read_pickle(r"C:\Users\Kai Fucile Ladouceur\.vscode\Code\bdc2021\data\pickle\4chan-all.pkl")
 # print(df['headline'][278].tolist()[-1])
 # number_of_entries = df.shape[0] - 5 # subtracted 5 to deal with index errors
-df2 = pd.DataFrame()
-key_terms = ["china flu","wuflu","china virus","wuhan virus", "kungflu","wuhan","lab leak","covid"]
+key_terms = ["china flu","wuflu","china virus","wuhan virus", "kungflu","wuhan","lab leak"]
+# ["sars-cov-2","severe acute respiratory syndrome coronavirus 2"]
+
+df["text"] = df['text'].str.lower()
+df.reset_index()
+#test out seeing if using sars-cov-2 and scientific names have reduced negative sentiment when compared to just using covid or covid 19
+
+df3 = pd.DataFrame()
+
 for index, harrisonisthebest in df.iterrows():
-  for keyterm in key_terms:
+   for keyterm in key_terms:
     if keyterm in harrisonisthebest['text'].lower():
-      df2 = pd.concat([df2, harrisonisthebest.to_frame().T])
-      # print(type(harrisonisthebest))
+      df3 = pd.concat([df3, harrisonisthebest.to_frame().T])
 
-
-print(df2)
+print(df3)
+df3['compound'] = pd.to_numeric(df3['compound'])
+df3['pos'] = pd.to_numeric(df3['pos'])
+df3['neg'] = pd.to_numeric(df3['neg'])
+df3['neu'] = pd.to_numeric(df3['neu'])
+df3['label'] = pd.to_numeric(df3['label'])
+print(df3.info())
+# df3.to_pickle(r"C:\Users\Kai Fucile Ladouceur\.vscode\Code\bdc2021\data\pickle\Reddit-name-filter.pkl")
