@@ -40,7 +40,11 @@ print("Data successfully cleaned.")
 
 
 # SENTIMENT HISTOGRAM
-#fig = sns.histplot(data=g.d['twitter'], x='compound', bins=50, kde=True, hue='neg')
+fig = sns.histplot(data=g.d['parler-sars'], 
+                   x='compound', 
+                   bins=25, 
+                   kde=True, 
+                   color=g.colors['parler'])
 
 # WORDS SCATTER PLOT
 #fig = sns.scatterplot(data=g.d['twitter'], x='compound', y='words')
@@ -52,20 +56,20 @@ print("Data successfully cleaned.")
 #                   showmeans=True)
 
 # SENTIMENT VIOLIN PLOT
-fig = sns.violinplot(y='value',
-                     x='variable',
-                     data=pd.melt(cln.compounds_df(['parler', 'parler-kw', 'parler-sars'], ['None', 'Locational Taxonomy', 'Biological Taxonomy'])),
-                     showmeans=True,
-                     inner="box",
-                     color=g.colors['parler'])
+# fig = sns.violinplot(y='value',
+#                      x='variable',
+#                      data=pd.melt(cln.compounds_df(['parler', 'parler-kw', 'parler-sars'], ['None', 'Locational Taxonomy', 'Biological Taxonomy'])),
+#                      showmeans=True,
+#                      inner="box",
+#                      color=g.colors['parler'])
 fig.set(
-        #xlabel='compounded positivity score on [-1, 1]', 
-        #ylabel='frequency', 
-        xlabel='Filter',
-        ylabel='Compounded positivity score on [-1, 1]',
+        xlabel='compounded positivity score on [-1, 1]', 
+        ylabel='frequency', 
+        # xlabel='Filter',
+        # ylabel='Compounded positivity score on [-1, 1]',
         #title='Reddit r/movies Positivity vs. No. of Words',)
-        #title='Parler Frequency of Positivity')
+        title='Parler Frequency of Positivity Filtered by Locational Taxonomy')
         #title='Parler Box and Whisker')
-        title = 'Parler Violin Plot')
+        # title = 'Parler Violin Plot')
 print("Plotting figure...")
 plt.show()
