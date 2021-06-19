@@ -52,12 +52,12 @@ print("Data successfully cleaned.")
 #                   showmeans=True)
 
 # SENTIMENT VIOLIN PLOT
-fig = sns.violinplot(y="value",
+fig = sns.violinplot(y='value',
                      x='variable',
                      data=pd.melt(cln.compounds_df(['parler', 'parler-kw', 'parler-sars'], ['None', 'Locational Taxonomy', 'Biological Taxonomy'])),
                      showmeans=True,
                      inner="box",
-                     color="")
+                     color=g.colors['parler'])
 fig.set(
         #xlabel='compounded positivity score on [-1, 1]', 
         #ylabel='frequency', 
