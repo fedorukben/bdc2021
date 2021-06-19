@@ -15,6 +15,7 @@ g.d = {
 }
 
 """
+
 # df = pd.io.stata.read_stata('file.dta')
 g.d['misinfo-type'] = pd.read_pickle("../data/pickle/misinfo-type.pkl")
 g.d['twitter'] = pd.read_pickle('../data/pickle/twitter.pkl')
@@ -38,14 +39,33 @@ for sub in g.reddit_subs:
 print("Data successfully cleaned.")
 
 
+# SENTIMENT HISTOGRAM
 #fig = sns.histplot(data=g.d['twitter'], x='compound', bins=50, kde=True, hue='neg')
+
+# WORDS SCATTER PLOT
 #fig = sns.scatterplot(data=g.d['twitter'], x='compound', y='words')
 
-# #fig = sns.boxplot(g.d['reddit']['compound'])
-fig.set(xlabel='compounded positivity score on [-1, 1]', 
-        ylabel='frequency', 
+# SENTIMENT BOX AND WHISKER PLOT
+# fig = sns.boxplot(x="value", 
+#                   y="variable", 
+#                   data=pd.melt(cln.compounds_df(['parler', 'parler-kw'])),
+#                   showmeans=True)
+
+# SENTIMENT VIOLIN PLOT
+fig = sns.violinplot(y="value",
+                     x='variable',
+                     data=pd.melt(cln.compounds_df(['parler', 'parler-kw', 'parler-sars'], ['None', 'Locational Taxonomy', 'Biological Taxonomy'])),
+                     showmeans=True,
+                     inner="box",
+                     color="")
+fig.set(
+        #xlabel='compounded positivity score on [-1, 1]', 
+        #ylabel='frequency', 
+        xlabel='Filter',
+        ylabel='Compounded positivity score on [-1, 1]',
         #title='Reddit r/movies Positivity vs. No. of Words',)
-        title='Parler Frequency of Positivity')
+        #title='Parler Frequency of Positivity')
+        #title='Parler Box and Whisker')
+        title = 'Parler Violin Plot')
 print("Plotting figure...")
 plt.show()
-

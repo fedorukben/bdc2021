@@ -1,5 +1,6 @@
 import pandas as pd
 import seaborn as sb
+import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.decomposition import PCA
 import glbl as g
@@ -31,3 +32,24 @@ def remove_zero_compound(key):
 def pca(key):
     pca = PCA(2)
     g.d[key] = pca.fit_transform(g.d[key])
+
+def compounds_df(keys, cols):
+    dfs = []
+    dct = dict()
+    for key in keys:
+        dfs.append(g.d[key])
+    for i in range(len(dfs)):
+        inner_lst = []
+        for compound in dfs[i]['compound']:
+            inner_lst.append(compound)
+        dct[cols[i]] = inner_lst
+    max_len = 0
+    for lst in dct.values():
+        #print(lst)
+        if len(lst) > max_len:
+            max_len = len(lst)
+    #print(f'max_len: {max_len}')
+    for lst in dct.values():
+        for _ in range(max_len - len(lst)):
+            lst.append(np.nan)
+    return pd.DataFrame(dct)
