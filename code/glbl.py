@@ -27,5 +27,5 @@ colors = {
     'parler': '#be1e2d',
     'reddit': '#ff5700',
     '4chan': '#bbcb90',
-    'facebook': '',
+    'facebook': '#3b5998',
 }

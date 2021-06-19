@@ -10,7 +10,7 @@ import cln
 # df = pd.io.stata.read_stata('file.dta')
 g.d['misinfo-type'] = pd.read_pickle("../data/pickle/misinfo-type.pkl")
 g.d['twitter'] = pd.read_pickle('../data/pickle/twitter.pkl')
-g.d['twitter-keyterm'] = pd.read_pickle('../data/pickle/twitter_keyterm.pkl')
+g.d['twitter-keyterm'] = pd.read_pickle('../data/pickle/twitter-keyterm.pkl')
 g.d['reddit'] = pd.read_pickle('../data/pickle/reddit.pkl')
 g.d['4chan'] = pd.read_pickle('../data/pickle/4chan.pkl')
 g.d['twarc'] = pd.read_pickle('../data/pickle/twarc.pkl')
@@ -42,7 +42,7 @@ fig = sns.histplot(data=g.d['fb-db'],
                    x='compound', 
                    bins=25, 
                    kde=True, 
-                   color=g.colors['reddit'])
+                   color=g.colors['facebook'])
 
 # WORDS SCATTER PLOT
 #fig = sns.scatterplot(data=g.d['twitter'], x='compound', y='words')
