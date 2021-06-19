@@ -25,7 +25,7 @@ fchan_boards = [
 colors = {
     'twitter': '#1da1f2',
     'parler': '#be1e2d',
-    'reddit': '',
+    'reddit': '#ff5700',
     '4chan': '',
     'facebook': '',
 }

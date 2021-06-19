@@ -27,6 +27,8 @@ g.d['parler'] = pd.read_pickle('../data/pickle/parley.pkl')
 g.d['twarc-keyterm'] = pd.read_pickle('../data/pickle/twarc-keyterms.pkl')
 g.d['parler-kw'] = pd.read_pickle('../data/pickle/Parler-name-bad-filter.pkl')
 g.d['parler-sars'] = pd.read_pickle('../data/pickle/Parler-name-filter.pkl')
+g.d['reddit-all'] = pd.read_pickle('../data/pickle/reddit-all.pkl')
+g.d['4chan-all'] = pd.read_pickle('../data/pickle/4chan-all.pkl')
 for sub in g.reddit_subs:
     g.d[f'reddit-{sub}'] = pd.read_pickle(f"../data/pickle/reddit-{sub}.pkl")
 for board in g.fchan_boards:
@@ -40,11 +42,11 @@ print("Data successfully cleaned.")
 
 
 # SENTIMENT HISTOGRAM
-fig = sns.histplot(data=g.d['parler-sars'], 
+fig = sns.histplot(data=g.d['reddit-all'], 
                    x='compound', 
                    bins=25, 
                    kde=True, 
-                   color=g.colors['parler'])
+                   color=g.colors['reddit'])
 
 # WORDS SCATTER PLOT
 #fig = sns.scatterplot(data=g.d['twitter'], x='compound', y='words')
