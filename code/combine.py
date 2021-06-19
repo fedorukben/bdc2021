@@ -1,10 +1,14 @@
 import pandas as pd
+import os
 
-lst = []
-
-lst.append(pd.read_pickle('../data/pickle/twitter.pkl'))
-lst.append(pd.read_pickle('../data/pickle/twarc.pkl'))
+files = os.listdir('../../../../Downloads/fb/data')
+print(files)
 print("Gathered data.")
 
-pd.concat(lst).to_pickle('../data/pickle/twitter-all.pkl')
+lst = []
+for file in files:
+	if not file == 'datahuffingtonpost_facebook_statuses.csv':
+		lst.append(pd.read_csv(f'../../../../Downloads/fb/data/{file}'))
+
+pd.concat(lst).to_csv('../data/pickle/fb.csv')
 print("Saved combined file.")
