@@ -26,6 +26,6 @@ colors = {
     'twitter': '#1da1f2',
     'parler': '#be1e2d',
     'reddit': '#ff5700',
-    '4chan': '',
+    '4chan': '#bbcb90',
     'facebook': '',
 }
