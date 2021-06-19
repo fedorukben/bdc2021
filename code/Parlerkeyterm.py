@@ -12,7 +12,7 @@ pbar = ProgressBar()
 df = pd.read_pickle(r"C:\Users\Kai Fucile Ladouceur\.vscode\Code\bdc2021\data\pickle\parley.pkl")
 # print(df['headline'][278].tolist()[-1])
 # number_of_entries = df.shape[0] - 5 # subtracted 5 to deal with index errors
-key_terms = ["china flu","wuflu","china virus","wuhan virus", "kungflu","wuhan","lab leak"]
+key_terms = ["sars-cov-2","severe acute respiratory syndrome coronavirus 2"]
 
 df["text"] = df['text'].str.lower()
 df.reset_index()
@@ -31,5 +31,5 @@ df3['pos'] = pd.to_numeric(df3['pos'])
 df3['neg'] = pd.to_numeric(df3['neg'])
 df3['neu'] = pd.to_numeric(df3['neu'])
 df3['label'] = pd.to_numeric(df3['label'])
-print(df3.info())
-df.to_pickle(r"C:\Users\Kai Fucile Ladouceur\.vscode\Code\bdc2021\data\pickle\Parler-name-bad-filter.pkl")
+# print(df3.info())
+df3.to_pickle(r"C:\Users\Kai Fucile Ladouceur\.vscode\Code\bdc2021\data\pickle\Parler-name-filter.pkl")
