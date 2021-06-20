@@ -8,6 +8,7 @@ import glbl as g
 import cln
 
 # df = pd.io.stata.read_stata('file.dta')
+print('Loading data...')
 g.d['misinfo-type'] = pd.read_pickle("../data/pickle/misinfo-type.pkl")
 g.d['twitter'] = pd.read_pickle('../data/pickle/twitter.pkl')
 g.d['twitter-keyterm'] = pd.read_pickle('../data/pickle/twitter-keyterm.pkl')
@@ -25,6 +26,7 @@ g.d['reddit-all'] = pd.read_pickle('../data/pickle/reddit-all.pkl')
 g.d['4chan-all'] = pd.read_pickle('../data/pickle/4chan-all.pkl')
 g.d['twitter-all'] = pd.read_pickle('../data/pickle/twitter-all.pkl')
 g.d['fb-db'] = pd.read_pickle('../data/pickle/fb-db.pkl')
+g.d['youtube'] = pd.read_pickle('../data/pickle/youtube-all.pkl')
 for sub in g.reddit_subs:
     g.d[f'reddit-{sub}'] = pd.read_pickle(f"../data/pickle/reddit-{sub}.pkl")
 for board in g.fchan_boards:
@@ -38,11 +40,11 @@ print("Data successfully cleaned.")
 
 
 # SENTIMENT HISTOGRAM
-fig = sns.histplot(data=g.d['fb-db'], 
+fig = sns.histplot(data=g.d['youtube'], 
                    x='compound', 
                    bins=25, 
                    kde=True, 
-                   color=g.colors['facebook'])
+                   color=g.colors['youtube'])
 
 # WORDS SCATTER PLOT
 #fig = sns.scatterplot(data=g.d['twitter'], x='compound', y='words')
@@ -66,7 +68,7 @@ fig.set(
         # xlabel='Filter',
         # ylabel='Compounded positivity score on [-1, 1]',
         #title='Reddit r/movies Positivity vs. No. of Words',)
-        title='Facebook Frequency of Positivity from Dataset')
+        title='YouTube Frequency of Positivity from Dataset')
         #title='Parler Box and Whisker')
         # title = 'Reddit Violin Plot')
 print("Plotting figure...")

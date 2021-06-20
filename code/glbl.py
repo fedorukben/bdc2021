@@ -28,4 +28,5 @@ colors = {
     'reddit': '#ff5700',
     '4chan': '#bbcb90',
     'facebook': '#3b5998',
+    'youtube': '#282828'
 }
