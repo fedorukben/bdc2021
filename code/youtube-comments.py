@@ -12,6 +12,7 @@ df1 = pd.read_csv('../data/original/yt/GBcomments.csv', error_bad_lines=False, e
 df2 = pd.read_csv('../data/original/yt/UScomments.csv', error_bad_lines=False, engine='python')
 
 all_texts = set(pd.concat([df1, df2])['comment_text'].tolist())
+print(f'{len(all_texts)=}')
 
 pbar = ProgressBar()
 sia = SentimentIntensityAnalyzer()
@@ -29,6 +30,7 @@ for line in pbar(all_texts):
     if pol_score['compound'] == 0.0:
         continue
     pol_score['text'] = line
+    print('h')
     results.append(pol_score)
 
 df = pd.DataFrame.from_records(results)
